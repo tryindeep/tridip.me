@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["app/frontend/src/*"]
     }
   },
-  "include": ["app/frontend/src"]
+  "include": ["app/frontend/src", "app/frontend/postcss.config.js", "app/frontend/tailwind.config.js", "app/frontend/vite.config.js"]
 }
