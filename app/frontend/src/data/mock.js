@@ -42,7 +42,7 @@ export const experience = [
 
 export const projects = [
   {
-    title: "Food Label Intelligence",
+    title: "EatWise - Food Label Intelligence",
     status: "Early Stage",
     year: "2025 -",
     summary:
