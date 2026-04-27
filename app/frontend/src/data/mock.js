@@ -1,5 +1,5 @@
 // Static portfolio content - edit values here to update the site
-
+import profilePhoto from '../assets/profileImage.jpg'
 export const profile = {
   name: "Tridip Pramanick",
   shortName: "Tridip",
@@ -9,8 +9,7 @@ export const profile = {
     "Frontend-focused software engineer interested in open source, applied AI, and building thoughtful developer-friendly products.",
   summary:
     "I'm a software engineer with experience building enterprise frontend systems and an independent researcher who has worked on deep learning for medical image segmentation. I'm especially interested in open-source collaboration, practical machine learning, and writing clean, maintainable product code.",
-  photo:
-    "/customer-assets.emergentagent.com/job_tridip-lab/artifacts/6qkvthci_QfT7HIfF_400x400.jpg",
+  photo: profilePhoto,
   email: "iamtridip06@gmail.com",
   resumeUrl: null,
   links: {
