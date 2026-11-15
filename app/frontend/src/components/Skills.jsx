@@ -1,82 +1,108 @@
-import React from "react";
-import { skills, interests, achievements } from "../data/mock";
-import { SectionTitle } from "./About";
-import { Award, Compass } from "lucide-react";
+import {
+  Binary,
+  Blocks,
+  Braces,
+  Code2,
+  Database,
+  KeyRound,
+  ListTree,
+  LockKeyhole,
+  Network,
+  Server,
+  ShieldCheck,
+  Terminal,
+  Webhook,
+  Workflow,
+} from "lucide-react";
+import { DiAws, DiCss3, DiJava, DiNodejs } from "react-icons/di";
+import {
+  SiCplusplus,
+  SiDjango,
+  SiDocker,
+  SiExpress,
+  SiGithub,
+  SiGithubactions,
+  SiGit,
+  SiHtml5,
+  SiJavascript,
+  SiJsonwebtokens,
+  SiKubernetes,
+  SiLinux,
+  SiMongodb,
+  SiMysql,
+  SiN8N,
+  SiNextdotjs,
+  SiOpenapiinitiative,
+  SiPostgresql,
+  SiPostman,
+  SiPrisma,
+  SiPython,
+  SiReact,
+  SiRedis,
+  SiTailwindcss,
+  SiTurborepo,
+  SiTypescript,
+  SiVercel,
+} from "react-icons/si";
+import { skillGroups } from "../data";
+import Section from "./Section";
 
-const Skills = () => {
-  return (
-    <section className="py-20 border-t border-[#1C1A17]/10">
-      <SectionTitle kicker="- Toolkit" title="Things I work with." />
-
-      <div className="space-y-5">
-        {skills.map((g) => (
-          <div
-            key={g.group}
-            className="grid grid-cols-1 sm:grid-cols-[180px_1fr] gap-2 sm:gap-6 py-3 border-b border-dashed border-[#1C1A17]/10 last:border-0"
-          >
-            <div className="font-mono-tight text-[11px] uppercase tracking-[0.18em] text-[#1C1A17]/55 pt-1">
-              {g.group}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {g.items.map((it) => (
-                <span
-                  key={it}
-                  className="text-[13px] px-3 py-1 rounded-full bg-[#FBF8F2] border border-[#1C1A17]/12 text-[#1C1A17]/85 hover:bg-[#1C1A17] hover:text-[#F5F0E8] hover:border-[#1C1A17] transition-colors duration-200"
-                >
-                  {it}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-14">
-        <div>
-          <div className="flex items-center gap-2 mb-4">
-            <Award size={16} className="text-[#B8541D]" />
-            <h3 className="font-serif-display text-xl text-[#1C1A17]">
-              Achievements
-            </h3>
-          </div>
-          <ul className="space-y-2.5">
-            {achievements.map((a, i) => (
-              <li
-                key={i}
-                className="flex gap-3 text-[14.5px] leading-relaxed text-[#1C1A17]/80"
-              >
-                <span className="font-mono-tight text-[#B8541D] text-xs mt-1">
-                  +
-                </span>
-                <span>{a}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <div className="flex items-center gap-2 mb-4">
-            <Compass size={16} className="text-[#B8541D]" />
-            <h3 className="font-serif-display text-xl text-[#1C1A17]">
-              Currently learning
-            </h3>
-          </div>
-          <ul className="space-y-2.5">
-            {interests.map((it, i) => (
-              <li
-                key={i}
-                className="flex gap-3 text-[14.5px] leading-relaxed text-[#1C1A17]/80"
-              >
-                <span className="font-mono-tight text-[#1C1A17]/40 text-xs mt-1">
-                  -&gt;
-                </span>
-                <span>{it}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
+const skillIcons = {
+  "C++": SiCplusplus,
+  JavaScript: SiJavascript,
+  TypeScript: SiTypescript,
+  HTML: SiHtml5,
+  CSS: DiCss3,
+  "React.js": SiReact,
+  "Next.js": SiNextdotjs,
+  "Tailwind CSS": SiTailwindcss,
+  "Node.js": DiNodejs,
+  "Express.js": SiExpress,
+  "REST APIs": SiOpenapiinitiative,
+  "Prisma ORM": SiPrisma,
+  PostgreSQL: SiPostgresql,
+  MongoDB: SiMongodb,
+  MySQL: SiMysql,
+  Redis: SiRedis,
+  "Concurrency control": LockKeyhole,
+  "Distributed locking": LockKeyhole,
+  "Database indexing": ListTree,
+  JWT: SiJsonwebtokens,
+  "OAuth 2.0": KeyRound,
+  AWS: DiAws,
+  Docker: SiDocker,
+  Kubernetes: SiKubernetes,
+  Git: SiGit,
+  "CI/CD": SiGithubactions,
+  "Data Structures & Algorithms": Binary,
+  OOP: Blocks,
+  DBMS: Server,
+  "Operating Systems": Terminal,
+  Linux: SiLinux,
+  Turborepo: SiTurborepo,
+  Postman: SiPostman,
+  "GitHub": SiGithub,
+  Django: SiDjango,
+  Java: DiJava,
+  "n8n": SiN8N,
+  Vercel: SiVercel,
 };
 
-export default Skills;
+export default function Skills() {
+  const items = [...new Set(skillGroups.flatMap(([, technologies]) => technologies))];
+  return (
+    <Section id="skills" title="Skills & Technologies">
+      <div className="skill-grid">
+        {items.map((item) => {
+          const Icon = skillIcons[item] || Code2;
+          return (
+            <span className="skill-chip" key={item} title={item}>
+              <Icon className="skill-chip-icon" aria-hidden="true" />
+              <span>{item}</span>
+            </span>
+          );
+        })}
+      </div>
+    </Section>
+  );
+}

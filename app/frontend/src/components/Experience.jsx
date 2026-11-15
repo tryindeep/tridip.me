@@ -1,43 +1,25 @@
-import React from "react";
-import { experience } from "../data/mock";
-import { SectionTitle } from "./About";
+import { ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
+import { experience } from "../data";
+import Section from "./Section";
 
-const Experience = () => {
-  return (
-    <section id="work" className="py-20 border-t border-[#1C1A17]/10">
-      <SectionTitle kicker="- Work" title="Where I've been building." />
+export function ExperienceCard() {
+  return <details className="experience-card">
+    <summary className="experience-summary"><div className="company-logo">LT</div><div><div className="experience-title">{experience.company}</div><div className="experience-subtitle">{experience.role} · {experience.location}</div></div><time>{experience.period}</time><ChevronDown className="chevron" size={15} /></summary>
+    <ul className="experience-bullets">{experience.highlights.map((item) => <li key={item}>{item}</li>)}</ul>
+    <div className="experience-preview" aria-hidden="true">
+      <div className="experience-preview-head"><div><b>{experience.company}</b><small>{experience.role} · {experience.location}</small></div><span>{experience.period}</span></div>
+      <div className="impact-preview">
+        <div className="impact-preview-title">Selected impact</div>
+        <div className="impact-chart"><div className="impact-chart-labels"><span>Lighthouse performance</span><b>65 → 82</b></div><div className="impact-bars"><i /><i /></div></div>
+        <div className="impact-metrics"><div><b>−21%</b><span>load time</span></div><div><b>−30%</b><span>API requests</span></div><div><b>10k+</b><span>daily users</span></div></div>
+      </div>
+    </div>
+  </details>;
+}
 
-      <ol className="relative space-y-10">
-        {experience.map((job, idx) => (
-          <li key={idx} className="group">
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
-              <h3 className="font-serif-display text-2xl text-[#1C1A17]">
-                {job.role} <span className="text-[#1C1A17]/50">at</span>{" "}
-                <span className="text-[#B8541D]">{job.company}</span>
-              </h3>
-              <span className="font-mono-tight text-xs text-[#1C1A17]/55 tracking-wide">
-                {job.period}
-              </span>
-            </div>
-            <p className="font-mono-tight text-[11px] uppercase tracking-[0.18em] text-[#1C1A17]/45 mb-4">
-              {job.location}
-            </p>
-            <ul className="space-y-2.5">
-              {job.bullets.map((b, i) => (
-                <li
-                  key={i}
-                  className="flex gap-3 text-[15px] leading-relaxed text-[#1C1A17]/80"
-                >
-                  <span className="mt-2 h-1 w-1 rounded-full bg-[#1C1A17]/40 shrink-0" />
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
-};
-
-export default Experience;
+export default function Experience() {
+  return <Section id="experience" title="Experiences" note="Work history" action={<Link className="section-action" to="/experience">View All <span>↗</span></Link>}>
+    <div className="experience-list"><ExperienceCard /></div>
+  </Section>;
+}

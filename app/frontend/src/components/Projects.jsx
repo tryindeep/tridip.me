@@ -1,90 +1,29 @@
-import React from "react";
-import { projects } from "../data/mock";
-import { SectionTitle } from "./About";
-import { Sparkles, Github } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
+import { Link } from "react-router-dom";
+import { project } from "../data";
+import Section from "./Section";
 
-const StatusPill = ({ children }) => (
-  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono-tight uppercase tracking-[0.15em] bg-[#B8541D]/10 text-[#B8541D] border border-[#B8541D]/20">
-    <span className="h-1.5 w-1.5 rounded-full bg-[#B8541D] animate-pulse" />
-    {children}
-  </span>
-);
-
-const Projects = () => {
-  return (
-    <section id="projects" className="py-20 border-t border-[#1C1A17]/10">
-      <SectionTitle kicker="- Project" title="A current exploration." />
-
-      <div className="space-y-8">
-        {projects.map((p, i) => (
-          <article
-            key={i}
-            className="group relative rounded-xl border border-[#1C1A17]/12 bg-[#FBF8F2] hover:bg-[#FDFAF4] transition-colors duration-300 overflow-hidden"
-          >
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#B8541D]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="p-6 sm:p-8">
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="font-serif-display text-3xl text-[#1C1A17]">
-                      {p.title}
-                    </h3>
-                    <StatusPill>{p.status}</StatusPill>
-                  </div>
-                  <p className="font-mono-tight text-xs text-[#1C1A17]/50">
-                    {p.year}
-                  </p>
-                </div>
-                <Sparkles
-                  size={20}
-                  className="text-[#B8541D]/70 shrink-0 mt-2 group-hover:rotate-12 transition-transform duration-300"
-                />
-              </div>
-
-              <p className="text-[15px] sm:text-[16px] leading-relaxed text-[#1C1A17]/85 mb-5">
-                {p.summary}
-              </p>
-
-              <ul className="space-y-2 mb-6">
-                {p.details.map((d, idx) => (
-                  <li
-                    key={idx}
-                    className="flex gap-3 text-[14.5px] leading-relaxed text-[#1C1A17]/75"
-                  >
-                    <span className="text-[#B8541D] font-mono-tight text-xs mt-1.5 shrink-0">
-                      0{idx + 1}
-                    </span>
-                    <span>{d}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="flex flex-wrap items-center gap-2 pt-4 border-t border-[#1C1A17]/10">
-                {p.stack.map((s) => (
-                  <span
-                    key={s}
-                    className="font-mono-tight text-[11px] px-2.5 py-1 rounded border border-[#1C1A17]/15 text-[#1C1A17]/70"
-                  >
-                    {s}
-                  </span>
-                ))}
-                {p.link && (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="ml-auto inline-flex items-center gap-1.5 text-sm text-[#1C1A17] hover:text-[#B8541D] transition-colors"
-                  >
-                    <Github size={14} /> Source
-                  </a>
-                )}
-              </div>
-            </div>
-          </article>
-        ))}
+export function ProjectCard() {
+  return <article className="project-card">
+      <div className="project-visual" aria-hidden="true">
+        <div className="project-rays" />
+        <div className="booking-preview">
+          <div className="preview-toolbar"><span className="preview-brand"><i /> RESERVEIT</span><span>BOOK TICKETS</span><span className="preview-avatar">TP</span></div>
+          <div className="preview-content">
+            <div className="preview-main"><div className="preview-eyebrow">SEAT RESERVATION</div><div className="preview-title">Choose your seats</div><div className="preview-subtitle">Movie · Showtime · Theater</div><div className="seat-map">{Array.from({ length: 32 }, (_, index) => <i className={[5, 6, 13, 14, 21].includes(index) ? "seat selected" : "seat"} key={index} />)}</div></div>
+            <div className="preview-side"><span>SEAT SUMMARY</span><b>Your selected seats</b><small>Five-minute hold</small><button>Continue to payment</button></div>
+          </div>
+        </div>
       </div>
-    </section>
-  );
-};
+      <div className="project-header"><div><h3>{project.title}</h3><p className="project-subtitle">{project.subtitle}</p></div><span className="live-badge"><i />Live</span></div>
+      <p className="project-summary">{project.summary}</p>
+      <div className="project-highlights">{project.details.map(([label, text]) => <div className="project-highlight" key={label}><span>{label}</span><p>{text}</p></div>)}</div>
+      <div className="project-footer"><div className="tags">{project.technologies.map((technology) => <span key={technology}>{technology}</span>)}</div><div className="project-links"><a href={project.github} target="_blank" rel="noreferrer"><Github size={14} />Source</a><a href={project.live} target="_blank" rel="noreferrer">Live demo<ArrowUpRight size={13} /></a></div></div>
+    </article>;
+}
 
-export default Projects;
+export default function Projects() {
+  return <Section id="projects" title="Projects" note="Selected work" action={<Link className="section-action" to="/projects">View All <span>↗</span></Link>}>
+    <div className="project-grid"><ProjectCard /></div>
+  </Section>;
+}
